@@ -1,9 +1,6 @@
 <template>
-  <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
-    <div class="recipe-body">
+  <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
+    <!-- <div class="recipe-body">
       <img :src="recipe.image" class="recipe-image" />
     </div>
     <div class="recipe-footer">
@@ -14,7 +11,20 @@
         <li>{{ recipe.readyInMinutes }} minutes</li>
         <li>{{ recipe.popularity }} likes</li>
       </ul>
-    </div>
+    </div>-->
+    <b-card
+      :title="recipe.title"
+      :img-src="recipe.image"
+      img-top
+      tag="article"
+      style="max-width: 20rem;"
+      class="mb-2"
+    >
+      <b-card-text>
+        <li>{{ recipe.readyInMinutes }} minutes</li>
+        <li>{{ recipe.popularity }} likes</li>
+      </b-card-text>
+    </b-card>
   </router-link>
 </template>
 
