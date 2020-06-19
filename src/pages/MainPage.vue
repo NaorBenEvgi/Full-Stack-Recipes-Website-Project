@@ -1,11 +1,16 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <RecipePreviewList title="Randome Recipes" class="RandomRecipes center" />
+    <RecipePreviewList
+      title="Randome Recipes"
+      class="RandomRecipes center"
+      :recipes="random_recipes"
+    />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     {{ !$root.store.username }}
     <RecipePreviewList
       title="Last Viewed Recipes"
+      :recipes="last_seen_recipes"
       :class="{
         RandomRecipes: true,
         blur: !$root.store.username,
@@ -23,9 +28,47 @@
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
+
 export default {
   components: {
     RecipePreviewList
+  },
+  data() {
+    return {
+      random_recipes: [],
+      last_seen_recipes: []
+    };
+  },
+  mounted() {
+    this.updateRandomRecipes();
+    this.updateLastSeenRecipes();
+  },
+  methods: {
+    async updateRandomRecipes() {
+      try {
+        const response = await this.axios.get(
+          "https://recipes-web-project.herokuapp.com/recipes/random",
+          { withCredentials: true }
+        );
+        const recipes = response.data;
+        //this.random_recipes = [];
+        this.random_recipes.push(...recipes);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateLastSeenRecipes() {
+      try {
+        const response = await this.axios.get(
+          "https://recipes-web-project.herokuapp.com/users/lastWatched"
+        );
+        const recipes = response.data;
+        //this.last_seen_recipes = [];
+        this.last_seen_recipes.push(...recipes);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 };
 </script>
