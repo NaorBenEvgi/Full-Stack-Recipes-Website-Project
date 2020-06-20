@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
+  <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id, title: title } }" class="recipe-preview">
     <!-- <div class="recipe-body">
       <img :src="recipe.image" class="recipe-image" />
     </div>
@@ -43,6 +43,10 @@ export default {
   props: {
     recipe: {
       type: Object,
+      required: true
+    },
+    title:{
+      type: String,
       required: true
     }
 

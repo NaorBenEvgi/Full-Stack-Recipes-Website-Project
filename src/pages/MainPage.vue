@@ -8,7 +8,7 @@
     <b-row>
       <b-col>
         <RecipePreviewList
-          title="Randome Recipes"
+          title="Random Recipes"
           class="RandomRecipes center"
           :recipes="random_recipes"
         />
