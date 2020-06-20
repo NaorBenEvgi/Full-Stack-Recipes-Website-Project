@@ -10,12 +10,16 @@
       <b-nav-text v-else>Hello {{$root.store.username }} |</b-nav-text>
 
       <b-nav-item-dropdown v-if="$root.store.username" text="Personal" right>
-        <b-dropdown-item href="#">Favorites</b-dropdown-item>
-        <b-dropdown-item href="#">My Recipes</b-dropdown-item>
-        <b-dropdown-item href="#">Family Recipes</b-dropdown-item>
+        <router-link tag="b-dropdown-item" :to="{ name: 'favorites'}">Favorites</router-link>
+        <router-link tag="b-dropdown-item" :to="{ name: 'personalRecipes'}">My Recipes</router-link>
+        <router-link tag="b-dropdown-item" :to="{ name: 'familyRecipes'}">Family Recipes</router-link>
       </b-nav-item-dropdown>
       <b-nav-item-dropdown text="User" right>
-        <router-link v-if="!$root.store.username" tag="b-dropdown-item" :to="{ name: 'login' }">Login</router-link>
+        <router-link
+          v-if="!$root.store.username"
+          tag="b-dropdown-item"
+          :to="{ name: 'login' }"
+        >Login</router-link>
         <b-dropdown-item v-else @click="Logout">Logout</b-dropdown-item>
         <router-link tag="b-dropdown-item" :to="{ name: 'register' }">Register</router-link>
       </b-nav-item-dropdown>
