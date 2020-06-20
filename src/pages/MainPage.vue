@@ -1,37 +1,50 @@
 <template>
-  <div class="container">
-    <h1 class="title">Main Page</h1>
-    <RecipePreviewList
-      title="Randome Recipes"
-      class="RandomRecipes center"
-      :recipes="random_recipes"
-    />
-    <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    {{ !$root.store.username }}
-    <RecipePreviewList
-      title="Last Viewed Recipes"
-      :recipes="last_seen_recipes"
-      :class="{
+  <b-container class="container">
+    <b-row>
+      <b-col>
+        <h1 class="title text-center">Main Page</h1>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <RecipePreviewList
+          title="Randome Recipes"
+          class="RandomRecipes center"
+          :recipes="random_recipes"
+        />
+      </b-col>
+      <b-col v-if="!$root.store.username">
+        <LoginPage></LoginPage>
+      </b-col>
+      <b-col v-else>
+        <RecipePreviewList
+          title="Last Viewed Recipes"
+          :recipes="last_seen_recipes"
+          :class="{
         RandomRecipes: true,
         blur: !$root.store.username,
         center: true
       }"
-      disabled
-    ></RecipePreviewList>
+          disabled
+        ></RecipePreviewList>
+      </b-col>
+    </b-row>
+
     <!-- <div
       style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
     >
       Centeredasdasdad
     </div>-->
-  </div>
+  </b-container>
 </template>
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-
+import LoginPage from "../pages/LoginPage";
 export default {
   components: {
-    RecipePreviewList
+    RecipePreviewList,
+    LoginPage,
   },
   data() {
     return {
@@ -47,6 +60,7 @@ export default {
     async updateRandomRecipes() {
       try {
         const response = await this.axios.get(
+          //         this.$root.store.base_url+"/recipes/random";
           "https://recipes-web-project.herokuapp.com/recipes/random",
           { withCredentials: true }
         );
@@ -60,7 +74,8 @@ export default {
     async updateLastSeenRecipes() {
       try {
         const response = await this.axios.get(
-          "https://recipes-web-project.herokuapp.com/users/lastWatched"
+          "https://recipes-web-project.herokuapp.com/users/lastWatched",
+          { withCredentials: true }
         );
         const recipes = response.data;
         //this.last_seen_recipes = [];
@@ -76,13 +91,5 @@ export default {
 <style lang="scss" scoped>
 .RandomRecipes {
   margin: 10px 0 10px;
-}
-.blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
-}
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
 }
 </style>

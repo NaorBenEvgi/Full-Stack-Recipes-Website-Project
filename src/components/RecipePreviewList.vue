@@ -4,8 +4,8 @@
       {{ title }}:
       <slot></slot>
     </h3>
-    <b-row>
-      <b-col v-for="r in recipes_display" :key="r.id">
+    <b-row v-for="r in recipes" :key="r.id">
+      <b-col>
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-col>
     </b-row>
@@ -29,12 +29,7 @@ export default {
       type: Array,
       required: true
     }
-  },
-    data() {
-    return {
-      recipes_display: this.recipes
-    };
-  },
+  }
 };
 </script>
 
