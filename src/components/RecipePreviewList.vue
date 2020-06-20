@@ -6,7 +6,7 @@
     </h3>
     <b-row v-for="r in recipes" :key="r.id">
       <b-col>
-        <RecipePreview class="recipePreview" :recipe="r" />
+        <RecipePreview class="recipePreview" :title= "title" :recipe="r" />
       </b-col>
     </b-row>
   </b-container>

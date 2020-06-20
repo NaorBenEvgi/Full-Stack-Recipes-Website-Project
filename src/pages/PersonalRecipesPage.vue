@@ -22,11 +22,10 @@ export default {
     };
   },
   mounted() {
-    this.updateRandomRecipes();
-    this.updateLastSeenRecipes();
+    this.updatePersonalRecipes();
   },
   methods: {
-    async updateRandomRecipes() {
+    async updatePersonalRecipes() {
       try {
         const response = await this.axios.get(
           //         this.$root.store.base_url+"/recipes/random";

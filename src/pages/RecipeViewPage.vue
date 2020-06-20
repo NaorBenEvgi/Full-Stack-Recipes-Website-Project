@@ -11,23 +11,15 @@
             <div class="mb-3">
               <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
               <div>Likes: {{ recipe.popularity }} likes</div>
-            </div>
-            Ingredients:
+            </div>Ingredients:
             <ul>
-              <li
-                v-for="(r, index) in recipe.ingredients"
-                :key="index + '_' + recipe.id"
-              >
-                {{ r }}
-              </li>
+              <li v-for="(r, index) in recipe.ingredients" :key="index + '_' + recipe.id">{{ r }}</li>
             </ul>
           </div>
           <div class="wrapped">
             Instructions:
             <ol>
-              <li v-for="s in recipe.instructions" :key="s">
-                {{ s }}
-              </li>
+              <li v-for="s in recipe.instructions" :key="s">{{ s }}</li>
             </ol>
           </div>
         </div>
@@ -36,7 +28,7 @@
       {{ $route.params }}
       {{ recipe }}
     </pre
-      > -->
+      >-->
     </div>
   </div>
 </template>
@@ -54,9 +46,15 @@ export default {
       // response = this.$route.params.response;
 
       try {
-        response = await this.axios.get(
-          `https://recipes-web-project.herokuapp.com/recipes/${this.$route.params.recipeId}`
-        );
+        if (this.$route.params.title === "Personal Recipes") {
+          response = await this.axios.get(
+            `https://recipes-web-project.herokuapp.com/users/personalRecipes/${this.$route.params.recipeId}`
+          );
+        } else {
+          response = await this.axios.get(
+            `https://recipes-web-project.herokuapp.com/recipes/${this.$route.params.recipeId}`
+          );
+        }
 
         // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
