@@ -3,9 +3,14 @@
     <h1 class="title">Search Page</h1>
     <b-form @submit.prevent="onSearch">
       <b-form-input v-model="query" id="query" placeholder="Search for any dish..." required></b-form-input>
-      <b-form-select v-model="amount_selected" id="amount" :options="amounts"></b-form-select>Popular Recipe Categories:
+      <b>Number of results:</b>
+      <b-form-select v-model="amount_selected" id="amount" :options="amounts"></b-form-select>
+      <h5>Popular Recipe Categories:</h5>
+      <b>Diet:</b>
       <b-form-select v-model="diet_selected" id="diet" :options="diet" class="mb-3"></b-form-select>
+      <b>Cuisine:</b>
       <b-form-select v-model="cuisine_selected" id="cuisine" :options="cuisine"></b-form-select>
+      <b>Intolerance:</b>
       <b-form-select v-model="intolerance_selected" id="intolerance" :options="intolerance"></b-form-select>
       <b-button type="submit" variant="info">search</b-button>
       <b-form-group label="Sort the results:" v-if="responsed_recipes">
@@ -35,9 +40,9 @@ export default {
     return {
       search: false,
       query: "",
-      diet: [{ value: null, text: "Diet", disabled: true }],
-      cuisine: [{ value: null, text: "Cuisine", disabled: true }],
-      intolerance: [{ value: null, text: "Intolerance", disabled: true }],
+      diet: [{ value: null, text: "-none-" }],
+      cuisine: [{ value: null, text: "-none-" }],
+      intolerance: [{ value: null, text: "-none-" }],
       amounts: [
         // { value: null, text: "Amount of results", disabled: true },
         { value: "5", text: 5 },
