@@ -45,11 +45,7 @@ export default {};
 
 <style>
 @import url(
-  https://fonts.googleapis.com/css?family=Open+Sans:400,
-  800,
-  700,
-  300
-);
+  https://fonts.googleapis.com/css?family=Open+Sans:400,800,700,300);
 @import url(https://fonts.googleapis.com/css?family=Squada+One);
 body {
   background: #eee

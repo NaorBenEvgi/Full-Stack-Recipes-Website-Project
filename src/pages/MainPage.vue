@@ -19,7 +19,7 @@
       <b-col v-else>
         <RecipePreviewList
           title="Last Viewed Recipes"
-          :recipes="last_seen_recipes"
+          :recipes="getLastSeenRecipes"
           :class="{
         RandomRecipes: true,
         blur: !$root.store.username,
@@ -44,7 +44,7 @@ import LoginPage from "../pages/LoginPage";
 export default {
   components: {
     RecipePreviewList,
-    LoginPage,
+    LoginPage
   },
   data() {
     return {
@@ -54,7 +54,12 @@ export default {
   },
   mounted() {
     this.updateRandomRecipes();
-    this.updateLastSeenRecipes();
+  },
+  computed: {
+    getLastSeenRecipes() {
+      this.updateLastSeenRecipes();
+      return last_seen_recipes;
+    }
   },
   methods: {
     async updateRandomRecipes() {

@@ -46,6 +46,9 @@ export default {
       // response = this.$route.params.response;
 
       try {
+        console.log(this.$route.params.title);
+        console.log(this.$root.store.username);
+
         if (this.$route.params.title === "Personal Recipes") {
           response = await this.axios.get(
             `https://recipes-web-project.herokuapp.com/users/personalRecipes/${this.$route.params.recipeId}`
@@ -55,7 +58,6 @@ export default {
             `https://recipes-web-project.herokuapp.com/recipes/${this.$route.params.recipeId}`
           );
         }
-
         // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
       } catch (error) {
@@ -63,38 +65,28 @@ export default {
         this.$router.replace("/NotFound");
         return;
       }
-
-      // let {
-      //   analyzedInstructions,
-      //   instructions,
-      //   extendedIngredients,
-      //   aggregateLikes,
-      //   readyInMinutes,
-      //   image,
-      //   title
-      // } = response.data.recipe;
-
-      // let _instructions = analyzedInstructions
-      //   .map((fstep) => {
-      //     fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-      //     return fstep.steps;
-      //   })
-      //   .reduce((a, b) => [...a, ...b], []);
-
-      // let _recipe = {
-      //   instructions,
-      //   _instructions,
-      //   analyzedInstructions,
-      //   extendedIngredients,
-      //   aggregateLikes,
-      //   readyInMinutes,
-      //   image,
-      //   title
-      // };
-
       this.recipe = response.data;
     } catch (error) {
       console.log(error);
+    }
+  },
+  mounted() {
+    this.updateLastWatch();
+  },
+  methods: {
+    async updateLastWatch() {
+      if (this.$root.store.username) {
+        try {
+          const response2 = await this.axios.post(
+            "https://recipes-web-project.herokuapp.com/users/watched",
+            {
+              recipeId: this.$route.params.recipeId
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
   }
 };
