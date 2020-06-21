@@ -44,17 +44,23 @@ import LoginPage from "../pages/LoginPage";
 export default {
   components: {
     RecipePreviewList,
-    LoginPage,
+    LoginPage
   },
   data() {
     return {
-      random_recipes: [],
-      last_seen_recipes: []
+      random_recipes: this.$store.random_items,
+      last_seen_recipes: this.$store.watched_items
     };
   },
-  mounted() {
-    this.updateRandomRecipes();
-    this.updateLastSeenRecipes();
+  created() {
+    console.log(this.$store.random_items);
+    if (this.$store.random_items.length === 0) {
+      this.updateRandomRecipes();
+    }
+    if (this.$store.watched_items.length === 0) {
+      this.updateLastSeenRecipes();
+    }
+    // this.updateLastSeenRecipes();
   },
   methods: {
     async updateRandomRecipes() {
@@ -65,25 +71,26 @@ export default {
           { withCredentials: true }
         );
         const recipes = response.data;
-        //this.random_recipes = [];
         this.random_recipes.push(...recipes);
+        this.$store.random_items.length = 0;
+        this.$store.random_items.push(...recipes);
       } catch (error) {
         console.log(error);
       }
     },
-    async updateLastSeenRecipes() {
-      try {
-        const response = await this.axios.get(
-          "https://recipes-web-project.herokuapp.com/users/lastWatched",
-          { withCredentials: true }
-        );
-        const recipes = response.data;
-        //this.last_seen_recipes = [];
-        this.last_seen_recipes.push(...recipes);
-      } catch (error) {
-        console.log(error);
+      async updateLastSeenRecipes() {
+        try {
+          const response = await this.axios.get(
+            "https://recipes-web-project.herokuapp.com/users/lastWatched",
+            { withCredentials: true }
+          );
+          const recipes = response.data;
+          //this.last_seen_recipes = [];
+          this.last_seen_recipes.push(...recipes);
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
   }
 };
 </script>
@@ -92,4 +99,5 @@ export default {
 .RandomRecipes {
   margin: 10px 0 10px;
 }
+
 </style>
