@@ -11,10 +11,12 @@
         img-width="100"
         img-height="600"
       >
+        <br />
         <b-card-text>
-          Some quick example text to build on the
-          <em>card title</em> and make up the bulk of the card's
-          content.
+          We’ve known each other since the beginning of our military service in early 2013. We both took part of a course in unit 8200 in the Intelligence Force, which lasted a bit more than 5 months. As a part of the course, we got to know Lucy Aharish and we both fell in love with her!
+          Like every home assignment in our studies, we decided to do this project together. Both of us enjoy developing and designing, a thing that made the assignments in this course enjoyable for us, and it taught us a lot about the web and its development.
+          Another thing that we enjoyed in this project is the opportunity to pay tribute to our families and present some recipes we’ve grown up eating on our website.
+          We hope you enjoy our website!
         </b-card-text>
 
         <b-card-text>
@@ -32,8 +34,12 @@
             href="https://sise-web-development-environments.github.io/assignment1-HTML-website/"
             class="card-link"
           >Personal Page - Naor (Ass 1)</a>
-        </div>
 
+          <a
+            href="https://sise-web-development-environments.github.io/206126617/"
+            class="card-link"
+          >Personal Page - Roy (Ass 1)</a>
+        </div>
       </b-card>
     </div>
   </div>
@@ -44,9 +50,6 @@ export default {};
 </script>
 
 <style>
-@import url(
-  https://fonts.googleapis.com/css?family=Open+Sans:400,800,700,300);
-@import url(https://fonts.googleapis.com/css?family=Squada+One);
 body {
   background: #eee
     url(https://subtlepatterns.com/patterns/extra_clean_paper.png);
