@@ -3,6 +3,8 @@ import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
 axios.defaults.withCredentials = true;
+import { global_data } from "./shared_data";
+Vue.prototype.$store = global_data;
 
 import routes from "./routes";
 import VueRouter from "vue-router";
@@ -25,6 +27,8 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  FormCheckboxPlugin,
+  FormRadioPlugin	
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -37,6 +41,8 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  FormCheckboxPlugin,
+  FormRadioPlugin	
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
