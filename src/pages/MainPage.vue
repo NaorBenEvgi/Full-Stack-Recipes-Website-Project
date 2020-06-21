@@ -2,7 +2,7 @@
   <b-container class="container">
     <b-row>
       <b-col>
-        <h1 class="title text-center">Main Page</h1>
+        <h1 class="title text-center">Cooking Together</h1>
       </b-col>
     </b-row>
     <b-row>
@@ -12,6 +12,7 @@
           class="RandomRecipes center"
           :recipes="random_recipes"
         />
+        <b-button variant="info"  @click="updateRandomRecipes">Refresh</b-button>
       </b-col>
       <b-col v-if="!$root.store.username">
         <LoginPage></LoginPage>
@@ -78,19 +79,19 @@ export default {
         console.log(error);
       }
     },
-      async updateLastSeenRecipes() {
-        try {
-          const response = await this.axios.get(
-            "https://recipes-web-project.herokuapp.com/users/lastWatched",
-            { withCredentials: true }
-          );
-          const recipes = response.data;
-          //this.last_seen_recipes = [];
-          this.last_seen_recipes.push(...recipes);
-        } catch (error) {
-          console.log(error);
-        }
+    async updateLastSeenRecipes() {
+      try {
+        const response = await this.axios.get(
+          "https://recipes-web-project.herokuapp.com/users/lastWatched",
+          { withCredentials: true }
+        );
+        const recipes = response.data;
+        //this.last_seen_recipes = [];
+        this.last_seen_recipes.push(...recipes);
+      } catch (error) {
+        console.log(error);
       }
+    }
   }
 };
 </script>
@@ -99,5 +100,4 @@ export default {
 .RandomRecipes {
   margin: 10px 0 10px;
 }
-
 </style>
