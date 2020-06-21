@@ -2,7 +2,7 @@ export const global_data = {
 
     server_domain: "localhost:3000/",
 
-    items: [
+    search_items: [
         {
             "id": 480266,
             "title": "Cookie Dough Cheesecake Bars",
@@ -102,6 +102,70 @@ export const global_data = {
             "vegan": false,
             "vegetarian": false,
             "glutenFree": false
+        }
+    ],
+    random_items: [
+        {
+            "id": 480266,
+            "title": "Cookie Dough Cheesecake Bars",
+            "image": "https://spoonacular.com/recipeImages/480266-556x370.jpg",
+            "readyInMinutes": 50,
+            "popularity": 182446,
+            "vegan": false,
+            "vegetarian": false,
+            "glutenFree": false
+        },
+        {
+            "id": 575765,
+            "title": "Grilled Pound Cake S'mores Sandwiches",
+            "image": "https://spoonacular.com/recipeImages/575765-556x370.jpg",
+            "readyInMinutes": 6,
+            "popularity": 28706,
+            "vegan": false,
+            "vegetarian": false,
+            "glutenFree": true
+        },
+        {
+            "id": 810404,
+            "title": "Cherry Cake with Cherry Frosting",
+            "image": "https://spoonacular.com/recipeImages/810404-556x370.jpg",
+            "readyInMinutes": 55,
+            "popularity": 16476,
+            "vegan": false,
+            "vegetarian": false,
+            "glutenFree": true
+        }
+    ],
+    watched_items: [
+        {
+            "id": 480266,
+            "title": "Cookie Dough Cheesecake Bars",
+            "image": "https://spoonacular.com/recipeImages/480266-556x370.jpg",
+            "readyInMinutes": 50,
+            "popularity": 182446,
+            "vegan": false,
+            "vegetarian": false,
+            "glutenFree": false
+        },
+        {
+            "id": 575765,
+            "title": "Grilled Pound Cake S'mores Sandwiches",
+            "image": "https://spoonacular.com/recipeImages/575765-556x370.jpg",
+            "readyInMinutes": 6,
+            "popularity": 28706,
+            "vegan": false,
+            "vegetarian": false,
+            "glutenFree": true
+        },
+        {
+            "id": 810404,
+            "title": "Cherry Cake with Cherry Frosting",
+            "image": "https://spoonacular.com/recipeImages/810404-556x370.jpg",
+            "readyInMinutes": 55,
+            "popularity": 16476,
+            "vegan": false,
+            "vegetarian": false,
+            "glutenFree": true
         }
     ]
 };

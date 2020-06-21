@@ -14,9 +14,7 @@
           type="text"
           :state="validateState('username')"
         ></b-form-input>
-        <b-form-invalid-feedback>
-          Username is required
-        </b-form-invalid-feedback>
+        <b-form-invalid-feedback>Username is required</b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group
@@ -31,9 +29,7 @@
           v-model="$v.form.password.$model"
           :state="validateState('password')"
         ></b-form-input>
-        <b-form-invalid-feedback>
-          Password is required
-        </b-form-invalid-feedback>
+        <b-form-invalid-feedback>Password is required</b-form-invalid-feedback>
       </b-form-group>
 
       <b-button
@@ -41,11 +37,10 @@
         variant="primary"
         style="width:100px;display:block;"
         class="mx-auto w-100"
-        >Login</b-button
-      >
+      >Login</b-button>
       <div class="mt-2">
         Do not have an account yet?
-        <router-link to="register"> Register in here</router-link>
+        <router-link to="register">Register in here</router-link>
       </div>
     </b-form>
     <b-alert
@@ -54,12 +49,10 @@
       variant="warning"
       dismissible
       show
-    >
-      Login failed: {{ form.submitError }}
-    </b-alert>
+    >Login failed: {{ form.submitError }}</b-alert>
     <!-- <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
-    </b-card> -->
+    </b-card>-->
   </div>
 </template>
 
@@ -91,6 +84,19 @@ export default {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
     },
+    async updateLastSeenRecipes() {
+      try {
+        const response = await this.axios.get(
+          "https://recipes-web-project.herokuapp.com/users/lastWatched",
+          { withCredentials: true }
+        );
+        const recipes = response.data;
+        this.$store.watched_items.length = 0;
+        this.$store.watched_items.push(...recipes);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async Login() {
       try {
         const response = await this.axios.post(
@@ -120,6 +126,7 @@ export default {
       // console.log("login method go");
 
       this.Login();
+      this.updateLastSeenRecipes();
     }
   }
 };

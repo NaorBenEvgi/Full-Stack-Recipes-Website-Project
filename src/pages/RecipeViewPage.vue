@@ -71,10 +71,23 @@ export default {
     }
   },
   mounted() {
-    this.updateLastWatch();
+    this.createLastWatch();
   },
   methods: {
-    async updateLastWatch() {
+    async updateLastSeenRecipes() {
+      try {
+        const response = await this.axios.get(
+          "https://recipes-web-project.herokuapp.com/users/lastWatched",
+          { withCredentials: true }
+        );
+        const recipes = response.data;
+        this.$store.watched_items.length = 0;
+        this.$store.watched_items.push(...recipes);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async createLastWatch() {
       if (this.$root.store.username) {
         try {
           const response2 = await this.axios.post(
@@ -83,6 +96,7 @@ export default {
               recipeId: this.$route.params.recipeId
             }
           );
+          this.updateLastSeenRecipes();
         } catch (error) {
           console.log(error);
         }

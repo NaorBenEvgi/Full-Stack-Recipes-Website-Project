@@ -51,7 +51,7 @@ export default {
       cuisine_selected: null,
       intolerance_selected: null,
       //   RecipePreviewListSearchKey: 0,
-      responsed_recipes: this.$store.items,
+      responsed_recipes: this.$store.search_items,
       selected_sorts: [],
       sorts: [
         { text: "Time", value: "time" },
@@ -84,8 +84,8 @@ export default {
         );
         const recipes = response.data;
         this.responsed_recipes.push(...recipes);
-        this.$store.items.length = 0;
-        this.$store.items.push(...recipes);
+        this.$store.search_items.length = 0;
+        this.$store.search_items.push(...recipes);
       } catch (error) {
         console.log(error);
       }
