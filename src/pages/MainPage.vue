@@ -99,4 +99,5 @@ export default {
 .RandomRecipes {
   margin: 10px 0 10px;
 }
+
 </style>
