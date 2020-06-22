@@ -67,8 +67,8 @@ export default {
     async updateRandomRecipes() {
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          "https://recipes-web-project.herokuapp.com/recipes/random",
+          this.$root.store.base_url+"/recipes/random",
+          //"https://recipes-web-project.herokuapp.com/recipes/random",
           { withCredentials: true }
         );
         const recipes = response.data;
@@ -82,7 +82,8 @@ export default {
     async updateLastSeenRecipes() {
       try {
         const response = await this.axios.get(
-          "https://recipes-web-project.herokuapp.com/users/lastWatched",
+          this.$root.store.base_url+"/users/lastWatched",
+          //"https://recipes-web-project.herokuapp.com/users/lastWatched",
           { withCredentials: true }
         );
         const recipes = response.data;

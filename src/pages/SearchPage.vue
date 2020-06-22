@@ -83,8 +83,8 @@ export default {
     async searchRecipes() {
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          `https://recipes-web-project.herokuapp.com/recipes/search/query/${this.query}/amount/${this.amount_selected}`,
+          this.$root.store.base_url+`/recipes/search/query/${this.query}/amount/${this.amount_selected}`,
+          //`https://recipes-web-project.herokuapp.com/recipes/search/query/${this.query}/amount/${this.amount_selected}`,
           { withCredentials: true }
         );
         const recipes = response.data;
@@ -98,7 +98,6 @@ export default {
     onSearch() {
       this.search = true;
       this.searchRecipes();
-      //    this.RecipePreviewListSearchKey += 1;
     },
     compareByTime(a, b) {
       const timeA = a.readyInMinutes;

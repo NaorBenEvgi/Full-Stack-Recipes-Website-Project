@@ -5,12 +5,49 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 import { global_data } from "./shared_data";
 Vue.prototype.$store = global_data;
-
+import VueCookies from 'vue-cookies'
 import routes from "./routes";
 import VueRouter from "vue-router";
+Vue.use(VueCookies);
 Vue.use(VueRouter);
+
 const router = new VueRouter({
   routes,
+});
+
+
+const shared_data = {
+  //base_url: "http://localhost:3000",
+  base_url: "https://recipes-web-project.herokuapp.com",
+  username: localStorage.username,
+  login(username) {
+    localStorage.setItem("username", username);
+    this.username = username;
+    console.log("login", this.username);
+  },
+  logout() {
+    console.log("logout");
+    localStorage.removeItem("username");
+    this.username = undefined;
+  },
+};
+console.log(shared_data);
+// Vue.prototype.$root.store = shared_data;
+
+router.beforeEach((to, from, next) => {
+  console.log(Vue.$cookies.get("session"));
+  // if the user was logged in and than the cookie  expired: if in local storage there is username but there is no cookie
+  // if (shared_data.username === undefined || !Vue.$cookies.get("session")) {
+  //     // logout forcely
+  //     shared_data.logout();
+  //     // redirect to main/home page
+  //     next({ name: 'main' });
+
+  // } else {
+  //     next();
+  // }
+  // console.log(555, Vue.$cookies.keys());
+  next();
 });
 
 import Vuelidate from "vuelidate";
@@ -77,22 +114,6 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 
-const shared_data = {
-  base_url: "https://recipes-web-project.herokuapp.com",
-  username: localStorage.username,
-  login(username) {
-    localStorage.setItem("username", username);
-    this.username = username;
-    console.log("login", this.username);
-  },
-  logout() {
-    console.log("logout");
-    localStorage.removeItem("username");
-    this.username = undefined;
-  },
-};
-console.log(shared_data);
-// Vue.prototype.$root.store = shared_data;
 
 new Vue({
   router,

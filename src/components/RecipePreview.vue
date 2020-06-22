@@ -36,10 +36,10 @@
         </p>
       </b-card-text>
     </b-card-body>
-    <a v-if="this.recipes_info[0][this.recipe.id].watched" class="h2 mb-2">
+    <a v-if="this.recipes_info[0] && this.recipes_info[0][this.recipe.id].watched" class="h2 mb-2">
       <b-icon icon="clock-history" ></b-icon>
     </a>
-    <a v-if="!this.recipes_info[0][this.recipe.id].saved" aria-hidden="true" @click="markAsFavorite" class="h2 mb-2">
+    <a v-if="this.recipes_info[0] && !this.recipes_info[0][this.recipe.id].saved" aria-hidden="true" @click="markAsFavorite" class="h2 mb-2">
       <b-icon icon="heart"></b-icon>
     </a>
     <a v-else class="h2 mb-2">
@@ -82,8 +82,8 @@ export default {
       console.log(this.recipe.id);
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          `https://recipes-web-project.herokuapp.com/users/recipesInfo/[${this.recipe.id}]`,
+           this.$root.store.base_url+`/users/recipesInfo/[${this.recipe.id}]`,
+          //`https://recipes-web-project.herokuapp.com/users/recipesInfo/[${this.recipe.id}]`,
           { withCredentials: true }
         );
         const info = response.data;
@@ -96,8 +96,8 @@ export default {
     async markAsFavorite() {
       try {
         const response = await this.axios.post(
-          //         this.$root.store.base_url+"/recipes/random";
-          `https://recipes-web-project.herokuapp.com/users/favorites`,
+           this.$root.store.base_url+"/users/favorites",
+          //`https://recipes-web-project.herokuapp.com/users/favorites`,
           {
             recipeId: this.recipe.id
           }

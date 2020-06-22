@@ -51,11 +51,13 @@ export default {
 
         if (this.$route.params.title === "Personal Recipes") {
           response = await this.axios.get(
-            `https://recipes-web-project.herokuapp.com/users/personalRecipes/${this.$route.params.recipeId}`
+            this.$root.store.base_url + `/users/personalRecipes/${this.$route.params.recipeId}`
+            //`https://recipes-web-project.herokuapp.com/users/personalRecipes/${this.$route.params.recipeId}`
           );
         } else {
           response = await this.axios.get(
-            `https://recipes-web-project.herokuapp.com/recipes/${this.$route.params.recipeId}`
+             this.$root.store.base_url + `/recipes/${this.$route.params.recipeId}`
+           // `https://recipes-web-project.herokuapp.com/recipes/${this.$route.params.recipeId}`
           );
         }
         // console.log("response.status", response.status);
@@ -77,7 +79,8 @@ export default {
     async updateLastSeenRecipes() {
       try {
         const response = await this.axios.get(
-          "https://recipes-web-project.herokuapp.com/users/lastWatched",
+          this.$root.store.base_url + "/users/lastWatched",
+          //"https://recipes-web-project.herokuapp.com/users/lastWatched",
           { withCredentials: true }
         );
         const recipes = response.data;
@@ -91,7 +94,8 @@ export default {
       if (this.$root.store.username) {
         try {
           const response2 = await this.axios.post(
-            "https://recipes-web-project.herokuapp.com/users/watched",
+            this.$root.store.base_url + "/users/watched",
+           // "https://recipes-web-project.herokuapp.com/users/watched",
             {
               recipeId: this.$route.params.recipeId
             }

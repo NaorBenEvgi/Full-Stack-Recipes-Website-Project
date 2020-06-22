@@ -29,8 +29,8 @@ export default {
     async updateRandomRecipes() {
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          "https://recipes-web-project.herokuapp.com/users/favorites",
+          this.$root.store.base_url+"/users/favorites",
+          //"https://recipes-web-project.herokuapp.com/users/favorites",
           { withCredentials: true }
         );
         const recipes = response.data;

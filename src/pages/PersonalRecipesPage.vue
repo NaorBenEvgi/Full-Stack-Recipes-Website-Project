@@ -28,8 +28,8 @@ export default {
     async updatePersonalRecipes() {
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          "https://recipes-web-project.herokuapp.com/users/personalRecipes",
+          this.$root.store.base_url+"/users/personalRecipes",
+          //"https://recipes-web-project.herokuapp.com/users/personalRecipes",
           { withCredentials: true }
         );
         const recipes = response.data;

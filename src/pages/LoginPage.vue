@@ -87,7 +87,8 @@ export default {
     async updateLastSeenRecipes() {
       try {
         const response = await this.axios.get(
-          "https://recipes-web-project.herokuapp.com/users/lastWatched",
+          this.$root.store.base_url+"/users/lastWatched",
+          //"https://recipes-web-project.herokuapp.com/users/lastWatched",
           { withCredentials: true }
         );
         const recipes = response.data;
@@ -100,6 +101,7 @@ export default {
     async Login() {
       try {
         const response = await this.axios.post(
+           //this.$root.store.base_url+"/Login",
           "https://recipes-web-project.herokuapp.com/Login",
           {
             username: this.form.username,
