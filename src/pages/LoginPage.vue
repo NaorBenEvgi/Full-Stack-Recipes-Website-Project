@@ -84,10 +84,32 @@ export default {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
     },
+    async updateMainPage(){
+      try {
+        const response = await this.axios.get(
+          this.$root.store.base_url + "/recipes/random",
+          //"https://recipes-web-project.herokuapp.com/recipes/random",
+          { withCredentials: true }
+        );
+        const response2 = await this.axios.get(
+          this.$root.store.base_url + "/users/lastWatched",
+          //"https://recipes-web-project.herokuapp.com/users/lastWatched",
+          { withCredentials: true }
+        );
+        const recipes = response.data;
+        const recipes2 = response2.data;
+        this.$store.random_items.length = 0;
+        this.$store.random_items.push(...recipes);
+        this.$store.watched_items.length = 0;
+        this.$store.watched_items.push(...recipes2);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async updateLastSeenRecipes() {
       try {
         const response = await this.axios.get(
-          this.$root.store.base_url+"/users/lastWatched",
+          this.$root.store.base_url + "/users/lastWatched",
           //"https://recipes-web-project.herokuapp.com/users/lastWatched",
           { withCredentials: true }
         );
@@ -98,11 +120,25 @@ export default {
         console.log(error);
       }
     },
+    async updateRandomRecipes() {
+      try {
+        const response = await this.axios.get(
+          this.$root.store.base_url + "/recipes/random",
+          //"https://recipes-web-project.herokuapp.com/recipes/random",
+          { withCredentials: true }
+        );
+        const recipes = response.data;
+        this.$store.random_items.length = 0;
+        this.$store.random_items.push(...recipes);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async Login() {
       try {
         const response = await this.axios.post(
-           //this.$root.store.base_url+"/Login",
-          "https://recipes-web-project.herokuapp.com/Login",
+          this.$root.store.base_url + "/Login",
+          //"https://recipes-web-project.herokuapp.com/Login",
           {
             username: this.form.username,
             password: this.form.password
@@ -112,13 +148,13 @@ export default {
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
-        this.$router.push("/").catch();
+        this.$router.push("/").catch(() => {});
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
     },
-    onLogin() {
+    async onLogin() {
       // console.log("login method called");
       this.form.submitError = undefined;
       this.$v.form.$touch();
@@ -127,8 +163,10 @@ export default {
       }
       // console.log("login method go");
 
-      this.Login();
-      this.updateLastSeenRecipes();
+      await this.Login();
+      await this.updateMainPage();
+      // await this.updateRandomRecipes();
+      // await this.updateLastSeenRecipes();
     }
   }
 };

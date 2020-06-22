@@ -36,15 +36,25 @@
         </p>
       </b-card-text>
     </b-card-body>
-    <a v-if="this.recipes_info[0] && this.recipes_info[0][this.recipe.id].watched" class="h2 mb-2">
-      <b-icon icon="clock-history" ></b-icon>
-    </a>
-    <a v-if="this.recipes_info[0] && !this.recipes_info[0][this.recipe.id].saved" aria-hidden="true" @click="markAsFavorite" class="h2 mb-2">
-      <b-icon icon="heart"></b-icon>
-    </a>
-    <a v-else class="h2 mb-2">
-      <b-icon icon="heart-fill"></b-icon>
-    </a>
+    <b-card-group v-if="$root.store.username">
+      <a
+        v-if="this.recipes_info[0] && this.recipes_info[0][this.recipe.id].watched "
+        class="h2 mb-2"
+      >
+        <b-icon icon="clock-history"></b-icon>
+      </a>
+      <a
+        v-if=" this.recipes_info[0] && !this.recipes_info[0][this.recipe.id].saved"
+        aria-hidden="true"
+        @click="markAsFavorite"
+        class="h2 mb-2"
+      >
+        <b-icon icon="heart"></b-icon>
+      </a>
+      <a v-else-if="this.recipes_info[0]" class="h2 mb-2">
+        <b-icon icon="heart-fill"></b-icon>
+      </a>
+    </b-card-group>
   </b-card>
 </template>
 
@@ -72,17 +82,20 @@ export default {
     },
     info: {
       type: Object
-    }
+    },
   },
   created() {
-    this.getRecipeInfo();
+    console.log(this.$root.store.username && this.recipes_info.length == 0);
+    if (this.$root.store.username && this.recipes_info.length == 0) {
+      this.getRecipeInfo();
+    }
   },
   methods: {
     async getRecipeInfo() {
       console.log(this.recipe.id);
       try {
         const response = await this.axios.get(
-           this.$root.store.base_url+`/users/recipesInfo/[${this.recipe.id}]`,
+          this.$root.store.base_url + `/users/recipesInfo/[${this.recipe.id}]`,
           //`https://recipes-web-project.herokuapp.com/users/recipesInfo/[${this.recipe.id}]`,
           { withCredentials: true }
         );
@@ -94,9 +107,13 @@ export default {
       }
     },
     async markAsFavorite() {
+      if(!this.$cookies.get("session")){
+        this.$router.push("/login");
+        return;
+      }
       try {
         const response = await this.axios.post(
-           this.$root.store.base_url+"/users/favorites",
+          this.$root.store.base_url + "/users/favorites",
           //`https://recipes-web-project.herokuapp.com/users/favorites`,
           {
             recipeId: this.recipe.id

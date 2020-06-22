@@ -7,7 +7,7 @@
     {{sortBy}}
     <b-row v-for="r in recipes" :key="r.id">
       <b-col>
-        <RecipePreview class="recipePreview" :title="title" :recipe="r" />
+        <RecipePreview class="recipePreview" :title="title"  :recipe="r" />
       </b-col>
     </b-row>
   </b-container>
@@ -37,7 +37,7 @@ export default {
     sortBy: {
       type: Array,
       required: false
-    }
+    },
   },
   methods: {
     sortByTime(a, b) {
