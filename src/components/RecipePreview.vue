@@ -1,6 +1,5 @@
 <template>
-  <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id, title: title } }" class="recipe-preview">
-    <!-- <div class="recipe-body">
+  <!-- <div class="recipe-body">
       <img :src="recipe.image" class="recipe-image" />
     </div>
     <div class="recipe-footer">
@@ -11,21 +10,42 @@
         <li>{{ recipe.readyInMinutes }} minutes</li>
         <li>{{ recipe.popularity }} likes</li>
       </ul>
-    </div>-->
-    <b-card
-      :title="recipe.title"
-      :img-src="recipe.image"
-      img-top
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
-    >
+  </div>-->
+  <b-card bg-variant="light" img-top tag="article" style="max-width: 20rem;" class="mb-2">
+    <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title } }">
+      <b-card-img :src="recipe.image" style="max-width: 20rem;"></b-card-img>
+    </router-link>
+    <b-card-body>
+      <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title } }">
+        <b-card-title>{{recipe.title}}</b-card-title>
+      </router-link>
       <b-card-text>
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.popularity }} likes</li>
+        <p class="h6 mb-2">
+          <b-icon icon="hand-thumbs-up" font-scale="1.3"></b-icon>
+          {{ recipe.popularity }} likes
+        </p>
+        <p class="h6 mb-2">
+          <b-icon icon="clock-fill" font-scale="1"></b-icon>
+          {{ recipe.readyInMinutes }} minutes
+        </p>
+        <p v-if="recipe.vegvegetarianan" class="h6 mb-2">
+          <b-icon icon="check2-circle" font-scale="1"></b-icon>vegetarian
+        </p>
+        <p v-if="recipe.vegan" class="h6 mb-2">
+          <b-icon icon="check2-circle" font-scale="1"></b-icon>vegan
+        </p>
       </b-card-text>
-    </b-card>
-  </router-link>
+    </b-card-body>
+    <a v-if="this.recipes_info[0][this.recipe.id].watched" class="h2 mb-2">
+      <b-icon icon="clock-history" ></b-icon>
+    </a>
+    <a v-if="!this.recipes_info[0][this.recipe.id].saved" aria-hidden="true" @click="markAsFavorite" class="h2 mb-2">
+      <b-icon icon="heart"></b-icon>
+    </a>
+    <a v-else class="h2 mb-2">
+      <b-icon icon="heart-fill"></b-icon>
+    </a>
+  </b-card>
 </template>
 
 <script>
@@ -38,6 +58,7 @@ export default {
   data() {
     return {
       // image_load: false
+      recipes_info: []
     };
   },
   props: {
@@ -45,34 +66,47 @@ export default {
       type: Object,
       required: true
     },
-    title:{
+    title: {
       type: String,
       required: true
+    },
+    info: {
+      type: Object
     }
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
+  },
+  created() {
+    this.getRecipeInfo();
+  },
+  methods: {
+    async getRecipeInfo() {
+      console.log(this.recipe.id);
+      try {
+        const response = await this.axios.get(
+          //         this.$root.store.base_url+"/recipes/random";
+          `https://recipes-web-project.herokuapp.com/users/recipesInfo/[${this.recipe.id}]`,
+          { withCredentials: true }
+        );
+        const info = response.data;
+        this.recipes_info.length = 0;
+        this.recipes_info.push(info);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async markAsFavorite() {
+      try {
+        const response = await this.axios.post(
+          //         this.$root.store.base_url+"/recipes/random";
+          `https://recipes-web-project.herokuapp.com/users/favorites`,
+          {
+            recipeId: this.recipe.id
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+      this.getRecipeInfo();
+    }
   }
 };
 </script>
