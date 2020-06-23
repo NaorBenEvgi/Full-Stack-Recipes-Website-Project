@@ -31,16 +31,25 @@ const routes = [
     path: "/favorites",
     name: "favorites",
     component: () => import("./pages/FavoritesRecipesPage"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/personalRecipes",
     name: "personalRecipes",
     component: () => import("./pages/PersonalRecipesPage"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/familyRecipes",
     name: "familyRecipes",
     component: () => import("./pages/FamilyRecipesPage"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/aboutUs",
@@ -54,5 +63,6 @@ const routes = [
   },
   
 ];
+
 
 export default routes;

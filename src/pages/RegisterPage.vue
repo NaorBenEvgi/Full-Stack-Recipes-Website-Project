@@ -262,7 +262,8 @@ export default {
     async Register() {
       try {
         const response = await this.axios.post(
-          "https://recipes-web-project.herokuapp.com/Register",
+          this.$root.store.base_url + "/Register",
+          //"https://recipes-web-project.herokuapp.com/Register",
           {
             username: this.form.username,
             firstname: this.form.firstName,

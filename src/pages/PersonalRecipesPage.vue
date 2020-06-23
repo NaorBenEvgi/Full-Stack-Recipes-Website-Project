@@ -18,22 +18,26 @@ export default {
   },
   data() {
     return {
-      personal_recipes: []
+      personal_recipes: this.$store.my_recipes
     };
   },
-  mounted() {
-    this.updatePersonalRecipes();
+  created() {
+    if (this.$store.my_recipes.length === 0) {
+      this.updatePersonalRecipes();
+    }
   },
   methods: {
     async updatePersonalRecipes() {
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          "https://recipes-web-project.herokuapp.com/users/personalRecipes",
+          this.$root.store.base_url + "/users/personalRecipes",
+          //"https://recipes-web-project.herokuapp.com/users/personalRecipes",
           { withCredentials: true }
         );
         const recipes = response.data;
         this.personal_recipes.push(...recipes);
+        this.$store.my_recipes.length = 0;
+        this.$store.my_recipes.push(...recipes);
       } catch (error) {
         console.log(error);
       }

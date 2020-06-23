@@ -18,23 +18,27 @@ export default {
   },
   data() {
     return {
-      favorites_recipes: []
+      favorites_recipes: this.$store.saved_recipes
     };
   },
-  mounted() {
-    this.updateRandomRecipes();
-    this.updateLastSeenRecipes();
+  created() {
+    console.log(this.$store.saved_recipes.length);
+    if (this.$store.saved_recipes.length === 0) {
+      this.updateFavoriteRecipes();
+    }
   },
   methods: {
-    async updateRandomRecipes() {
+    async updateFavoriteRecipes() {
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          "https://recipes-web-project.herokuapp.com/users/favorites",
+          this.$root.store.base_url + "/users/favorites",
+          //"https://recipes-web-project.herokuapp.com/users/favorites",
           { withCredentials: true }
         );
         const recipes = response.data;
         this.favorites_recipes.push(...recipes);
+        this.$store.saved_recipes.length = 0;
+        this.$store.saved_recipes.push(...recipes);
       } catch (error) {
         console.log(error);
       }

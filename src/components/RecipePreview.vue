@@ -12,11 +12,11 @@
       </ul>
   </div>-->
   <b-card bg-variant="light" img-top tag="article" style="max-width: 20rem;" class="mb-2">
-    <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title } }">
+    <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title, recipes_info:this.recipes_info  } }">
       <b-card-img :src="recipe.image" style="max-width: 20rem;"></b-card-img>
     </router-link>
     <b-card-body>
-      <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title } }">
+      <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title, recipes_info:this.recipes_info } }">
         <b-card-title>{{recipe.title}}</b-card-title>
       </router-link>
       <b-card-text>
@@ -28,7 +28,7 @@
           <b-icon icon="clock-fill" font-scale="1"></b-icon>
           {{ recipe.readyInMinutes }} minutes
         </p>
-        <p v-if="recipe.vegvegetarianan" class="h6 mb-2">
+        <p v-if="recipe.vegetarian" class="h6 mb-2">
           <b-icon icon="check2-circle" font-scale="1"></b-icon>vegetarian
         </p>
         <p v-if="recipe.vegan" class="h6 mb-2">
@@ -36,15 +36,25 @@
         </p>
       </b-card-text>
     </b-card-body>
-    <a v-if="this.recipes_info[0][this.recipe.id].watched" class="h2 mb-2">
-      <b-icon icon="clock-history" ></b-icon>
-    </a>
-    <a v-if="!this.recipes_info[0][this.recipe.id].saved" aria-hidden="true" @click="markAsFavorite" class="h2 mb-2">
-      <b-icon icon="heart"></b-icon>
-    </a>
-    <a v-else class="h2 mb-2">
-      <b-icon icon="heart-fill"></b-icon>
-    </a>
+    <b-card-group v-if="$root.store.username">
+      <a
+        v-if="this.recipes_info[0] && this.recipes_info[0][this.recipe.id].watched "
+        class="h2 mb-2"
+      >
+        <b-icon icon="clock-history"></b-icon>
+      </a>
+      <a
+        v-if=" this.recipes_info[0] && !this.recipes_info[0][this.recipe.id].saved"
+        aria-hidden="true"
+        @click="markAsFavorite"
+        class="h2 mb-2"
+      >
+        <b-icon icon="heart"></b-icon>
+      </a>
+      <a v-else-if="this.recipes_info[0]" class="h2 mb-2">
+        <b-icon icon="heart-fill"></b-icon>
+      </a>
+    </b-card-group>
   </b-card>
 </template>
 
@@ -72,18 +82,21 @@ export default {
     },
     info: {
       type: Object
-    }
+    },
   },
   created() {
-    this.getRecipeInfo();
+    console.log(this.$root.store.username && this.recipes_info.length == 0);
+    if (this.$root.store.username && this.recipes_info.length == 0) {
+      this.getRecipeInfo();
+    }
   },
   methods: {
     async getRecipeInfo() {
       console.log(this.recipe.id);
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          `https://recipes-web-project.herokuapp.com/users/recipesInfo/[${this.recipe.id}]`,
+          this.$root.store.base_url + `/users/recipesInfo/[${this.recipe.id}]`,
+          //`https://recipes-web-project.herokuapp.com/users/recipesInfo/[${this.recipe.id}]`,
           { withCredentials: true }
         );
         const info = response.data;
@@ -94,10 +107,14 @@ export default {
       }
     },
     async markAsFavorite() {
+      if(!this.$cookies.get("session")){
+        this.$router.push("/login");
+        return;
+      }
       try {
         const response = await this.axios.post(
-          //         this.$root.store.base_url+"/recipes/random";
-          `https://recipes-web-project.herokuapp.com/users/favorites`,
+          this.$root.store.base_url + "/users/favorites",
+          //`https://recipes-web-project.herokuapp.com/users/favorites`,
           {
             recipeId: this.recipe.id
           }

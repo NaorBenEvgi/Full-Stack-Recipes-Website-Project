@@ -1,7 +1,13 @@
 <template>
   <div class="container">
     <h1 class="title">Family Recipes Page</h1>
-    <b-card  v-for="r in family_recipes" :key="r.id" no-body class="overflow-hidden" style="max-width: 1040px; margin: 30px">
+    <b-card
+      v-for="r in family_recipes"
+      :key="r.id"
+      no-body
+      class="overflow-hidden"
+      style="max-width: 1040px; margin: 30px"
+    >
       <b-row no-gutters>
         <b-col md="6">
           <b-card-img :src="r.image" alt="Image" class="rounded-0"></b-card-img>
@@ -32,27 +38,30 @@
 export default {
   data() {
     return {
-      family_recipes: [],
+      family_recipes: this.$store.family_recipes
     };
   },
   created() {
-    this.updateFamilyRecipes();
+    if (this.$store.family_recipes.length === 0) {
+      this.updateFamilyRecipes();
+    }
   },
   methods: {
     async updateFamilyRecipes() {
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          "https://recipes-web-project.herokuapp.com/users/familyRecipes",
+          this.$root.store.base_url + "/users/familyRecipes",
+          //"https://recipes-web-project.herokuapp.com/users/familyRecipes",
           { withCredentials: true }
         );
         const recipes = response.data;
-        //this.random_recipes = [];
         this.family_recipes.push(...recipes);
+        this.$store.family_recipes.length = 0;
+        this.$store.family_recipes.push(...recipes);
       } catch (error) {
         console.log(error);
       }
-    },
+    }
   }
 };
 </script>

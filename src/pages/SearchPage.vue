@@ -13,12 +13,13 @@
       <b>Intolerance:</b>
       <b-form-select v-model="intolerance_selected" id="intolerance" :options="intolerance"></b-form-select>
       <b-button type="submit" variant="info">search</b-button>
-      <b-form-group label="Sort the results:" v-if="responsed_recipes">
+      <b-form-group label="Sort the results:" v-if="responsed_recipes.length != 0">
         <b-form-radio-group name="radio-button" v-model="selected_sorts" :options="sorts" switches></b-form-radio-group>
         <b-button variant="secondary" @click="sortHandle">Sort!</b-button>
       </b-form-group>
     </b-form>
     <RecipePreviewList
+      v-if="responsed_recipes.length != 0"
       title="Search Recipes"
       class="RandomRecipes center"
       :recipes="responsed_recipes"
@@ -82,15 +83,32 @@ export default {
   methods: {
     async searchRecipes() {
       try {
+        console.log(
+          this.cuisine_selected,
+          this.diet_selected,
+          this.intolerance_selected
+        );
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          `https://recipes-web-project.herokuapp.com/recipes/search/query/${this.query}/amount/${this.amount_selected}`,
-          { withCredentials: true }
+          this.$root.store.base_url +
+            `/recipes/search/query/${this.query}/amount/${this.amount_selected}`,
+          //`https://recipes-web-project.herokuapp.com/recipes/search/query/${this.query}/amount/${this.amount_selected}`,
+          {
+            params: {
+              cuisine: this.cuisine_selected,
+              diet: this.diet_selected,
+              intolerances: this.intolerance_selected
+            },
+          }
         );
         const recipes = response.data;
+        if(recipes.length === 0){
+          this.$root.toast("Your Search Returns No Results", "please try to search again...", "info");
+        }else{
         this.responsed_recipes.push(...recipes);
         this.$store.search_items.length = 0;
         this.$store.search_items.push(...recipes);
+        }
+
       } catch (error) {
         console.log(error);
       }
@@ -98,7 +116,6 @@ export default {
     onSearch() {
       this.search = true;
       this.searchRecipes();
-      //    this.RecipePreviewListSearchKey += 1;
     },
     compareByTime(a, b) {
       const timeA = a.readyInMinutes;

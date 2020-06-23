@@ -8,22 +8,23 @@
     <b-row>
       <b-col>
         <RecipePreviewList
-          title="Random Recipes"
+          title="Explore These Recipes"
           class="RandomRecipes center"
           :recipes="random_recipes"
         />
-        <b-button variant="info"  @click="updateRandomRecipes">Refresh</b-button>
+        <b-button variant="info" @click="updateRandomRecipes">Refresh</b-button>
       </b-col>
       <b-col v-if="!$root.store.username">
         <LoginPage></LoginPage>
       </b-col>
       <b-col v-else>
         <RecipePreviewList
-          title="Last Viewed Recipes"
+          title="Last Watched Recipes"
           :recipes="last_seen_recipes"
           :class="{
         RandomRecipes: true,
         blur: !$root.store.username,
+
         center: true
       }"
           disabled
@@ -50,25 +51,39 @@ export default {
   data() {
     return {
       random_recipes: this.$store.random_items,
-      last_seen_recipes: this.$store.watched_items
+      last_seen_recipes: this.$store.watched_items,
     };
   },
   created() {
-    console.log(this.$store.random_items);
     if (this.$store.random_items.length === 0) {
       this.updateRandomRecipes();
     }
-    if (this.$store.watched_items.length === 0) {
+    if (
+      this.$cookies.get("session") &&
+      this.$store.watched_items.length === 0
+    ) {
       this.updateLastSeenRecipes();
     }
-    // this.updateLastSeenRecipes();
+  },
+  mounted() {
+    console.log("mounted");
+    // console.log(this.$cookies.get("session"));
+    // if(this.$cookies.get("session") && this.$store.watched_items.length === 0){
+    //   this.updateLastSeenRecipes();
+    // }
+  },
+  updated() {
+    console.log("updated");
+    // if(this.$cookies.get("session") && this.$store.watched_items.length === 0){
+    //   this.updateLastSeenRecipes();
+    // }
   },
   methods: {
     async updateRandomRecipes() {
       try {
         const response = await this.axios.get(
-          //         this.$root.store.base_url+"/recipes/random";
-          "https://recipes-web-project.herokuapp.com/recipes/random",
+          this.$root.store.base_url + "/recipes/random",
+          //"https://recipes-web-project.herokuapp.com/recipes/random",
           { withCredentials: true }
         );
         const recipes = response.data;
@@ -82,7 +97,8 @@ export default {
     async updateLastSeenRecipes() {
       try {
         const response = await this.axios.get(
-          "https://recipes-web-project.herokuapp.com/users/lastWatched",
+          this.$root.store.base_url + "/users/lastWatched",
+          //"https://recipes-web-project.herokuapp.com/users/lastWatched",
           { withCredentials: true }
         );
         const recipes = response.data;
