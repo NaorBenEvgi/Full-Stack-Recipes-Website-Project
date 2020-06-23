@@ -8,7 +8,7 @@
     <b-row>
       <b-col>
         <RecipePreviewList
-          title="Random Recipes"
+          title="Explore These Recipes"
           class="RandomRecipes center"
           :recipes="random_recipes"
         />
@@ -19,7 +19,7 @@
       </b-col>
       <b-col v-else>
         <RecipePreviewList
-          title="Last Viewed Recipes"
+          title="Last Watched Recipes"
           :recipes="last_seen_recipes"
           :class="{
         RandomRecipes: true,
@@ -55,7 +55,6 @@ export default {
     };
   },
   created() {
-    console.log("created,",this.$store.watched_items.length);
     if (this.$store.random_items.length === 0) {
       this.updateRandomRecipes();
     }
@@ -63,7 +62,6 @@ export default {
       this.$cookies.get("session") &&
       this.$store.watched_items.length === 0
     ) {
-      console.log("am i here?");
       this.updateLastSeenRecipes();
     }
   },

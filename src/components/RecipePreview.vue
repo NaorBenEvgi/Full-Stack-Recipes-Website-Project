@@ -12,11 +12,11 @@
       </ul>
   </div>-->
   <b-card bg-variant="light" img-top tag="article" style="max-width: 20rem;" class="mb-2">
-    <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title } }">
+    <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title, recipes_info:this.recipes_info  } }">
       <b-card-img :src="recipe.image" style="max-width: 20rem;"></b-card-img>
     </router-link>
     <b-card-body>
-      <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title } }">
+      <router-link :to="{ name: 'recipe', params: { recipeId: this.recipe.id, title: title, recipes_info:this.recipes_info } }">
         <b-card-title>{{recipe.title}}</b-card-title>
       </router-link>
       <b-card-text>
@@ -28,7 +28,7 @@
           <b-icon icon="clock-fill" font-scale="1"></b-icon>
           {{ recipe.readyInMinutes }} minutes
         </p>
-        <p v-if="recipe.vegvegetarianan" class="h6 mb-2">
+        <p v-if="recipe.vegetarian" class="h6 mb-2">
           <b-icon icon="check2-circle" font-scale="1"></b-icon>vegetarian
         </p>
         <p v-if="recipe.vegan" class="h6 mb-2">

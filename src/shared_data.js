@@ -167,5 +167,10 @@ export const global_data = {
         //     "vegetarian": false,
         //     "glutenFree": true
         // }
-    ]
+    ],
+    saved_recipes:[
+
+    ],
+    my_recipes:[],
+    family_recipes:[]
 };
