@@ -21,12 +21,15 @@ const shared_data = {
   //base_url: "https://recipes-web-project.herokuapp.com",
   username: localStorage.username,
   login(username) {
+    console.log(global_data.watched_items.length);
     localStorage.setItem("username", username);
     this.username = username;
     console.log("login", this.username);
   },
   logout() {
     console.log("logout");
+    global_data.watched_items.length === 0;
+    global_data.search_items.length === 0
     Vue.$cookies.remove("session");
     localStorage.removeItem("username");
     this.username = undefined;
@@ -104,7 +107,8 @@ import {
   FormCheckboxPlugin,
   FormRadioPlugin,
   BootstrapVue,
-  BootstrapVueIcons
+  BootstrapVueIcons,
+  OverlayPlugin
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -120,7 +124,8 @@ import {
   FormCheckboxPlugin,
   FormRadioPlugin,
   BootstrapVue,
-  BootstrapVueIcons
+  BootstrapVueIcons,
+  OverlayPlugin
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
