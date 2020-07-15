@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 id="logo" class="title">About Us</h1>
+    <h1 id="logo" class="title subtitle">About Us</h1>
     <div>
       <b-card
         title="Naor Ben Ivgi & Roy Judes"

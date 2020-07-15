@@ -1,12 +1,12 @@
 <template>
   <b-container>
-    <h3>
+    <!-- <h3 class="subtitle">
       {{ title }}:
       <slot></slot>
-    </h3>
+    </h3> -->
     {{sortBy}}
-    <b-row v-for="r in recipes" :key="r.id">
-      <b-col>
+    <b-row  v-for="r in recipes" :key="r.id">
+      <b-col style="padding-left:98px;">
         <RecipePreview class="recipePreview" :title="title"  :recipe="r" />
       </b-col>
     </b-row>

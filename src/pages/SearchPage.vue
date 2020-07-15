@@ -1,19 +1,22 @@
 <template>
   <div class="container">
-    <h1 class="title">Search Page</h1>
+    <h1 class="title subtitle">Search Page</h1>
     <b-form @submit.prevent="onSearch">
-      <b-form-input v-model="query" id="query" placeholder="Search for any dish..." required></b-form-input>
-      <b>Number of results:</b>
-      <b-form-select v-model="amount_selected" id="amount" :options="amounts"></b-form-select>
-      <h5>Popular Recipe Categories:</h5>
+      <b-form-input  v-model="query" id="query" placeholder="Search for any dish..." required></b-form-input>
       <b>Diet:</b>
       <b-form-select v-model="diet_selected" id="diet" :options="diet" class="mb-3"></b-form-select>
       <b>Cuisine:</b>
       <b-form-select v-model="cuisine_selected" id="cuisine" :options="cuisine"></b-form-select>
       <b>Intolerance:</b>
       <b-form-select v-model="intolerance_selected" id="intolerance" :options="intolerance"></b-form-select>
+      <br/>
+      <b>Number of results:</b>
+      <b-form-select v-model="amount_selected" id="amount" :options="amounts"></b-form-select>
+      <br/>
       <b-button type="submit" variant="info">search</b-button>
-      <b-form-group label="Sort the results:" v-if="responsed_recipes.length != 0">
+      <br/>
+      <br/>
+      <b-form-group style="font-family: Georgia, serif; font-size: 20px; font-weight:bold;" label="Sort the results:" v-if="responsed_recipes.length != 0">
         <b-form-radio-group name="radio-button" v-model="selected_sorts" :options="sorts" switches></b-form-radio-group>
         <b-button variant="secondary" @click="sortHandle">Sort!</b-button>
       </b-form-group>
@@ -163,3 +166,20 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.custom-select{
+  width: 20%;
+  margin: 14px 21px 13px 31px;
+}
+.form-control{
+  width: 96%;
+  height: 50px;
+}
+b{
+  font-family: Georgia, serif; font-size: 20px;
+}
+b-button{
+  width:200px;
+}
+
+</style>

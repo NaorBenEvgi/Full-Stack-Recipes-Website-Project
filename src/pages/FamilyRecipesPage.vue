@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Family Recipes Page</h1>
+    <h1 class="title subtitle">Family Recipes Page</h1>
     <b-card
       v-for="r in family_recipes"
       :key="r.id"

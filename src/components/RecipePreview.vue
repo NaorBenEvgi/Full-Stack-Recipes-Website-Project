@@ -34,6 +34,9 @@
         <p v-if="recipe.vegan" class="h6 mb-2">
           <b-icon icon="check2-circle" font-scale="1"></b-icon>vegan
         </p>
+        <p v-if="recipe.glutenFree" class="h6 mb-2">
+          <b-icon icon="check2-circle" font-scale="1"></b-icon>gluten Free
+        </p>
       </b-card-text>
     </b-card-body>
     <b-card-group v-if="$root.store.username">

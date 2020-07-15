@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Personal Recipes Page</h1>
+    <h1 class="title subtitle">Personal Recipes Page</h1>
     <RecipePreviewList
       title="Personal Recipes"
       class="RandomRecipes center"
