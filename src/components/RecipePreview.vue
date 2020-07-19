@@ -39,7 +39,7 @@
         </p>
       </b-card-text>
     </b-card-body>
-    <b-card-group v-if="$root.store.username">
+    <b-card-group v-if="$root.store.username && this.title != 'Personal Recipes'">
       <a
         v-if="this.recipes_info[0] && this.recipes_info[0][this.recipe.id].watched "
         class="h2 mb-2"

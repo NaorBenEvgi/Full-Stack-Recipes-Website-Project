@@ -21,7 +21,7 @@
           :to="{ name: 'login' }"
         >Login</router-link>
         <b-dropdown-item v-else @click="Logout">Logout</b-dropdown-item>
-        <router-link tag="b-dropdown-item" :to="{ name: 'register' }">Register</router-link>
+        <router-link v-if="!$root.store.username" tag="b-dropdown-item" :to="{ name: 'register' }">Register</router-link>
       </b-nav-item-dropdown>
     </b-navbar-nav>
   </b-navbar>
