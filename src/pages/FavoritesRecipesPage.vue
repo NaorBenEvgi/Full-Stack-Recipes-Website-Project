@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Favorites Recipes Page</h1>
+    <h1 class="title subtitle">Favorites Recipes Page</h1>
     <RecipePreviewList
       title="Randome Recipes"
       class="RandomRecipes center"

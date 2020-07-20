@@ -122,7 +122,7 @@ export const global_data = {
         //     "readyInMinutes": 6,
         //     "popularity": 28706,
         //     "vegan": false,
-        //     "vegetarian": false,
+        //     "vegetarian": true,
         //     "glutenFree": true
         // },
         // {

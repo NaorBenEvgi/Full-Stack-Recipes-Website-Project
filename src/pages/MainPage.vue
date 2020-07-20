@@ -2,22 +2,24 @@
   <b-container class="container">
     <b-row>
       <b-col>
-        <h1 class="title text-center">Cooking Together</h1>
+        <h1 id="main-title" class="title text-center">Cooking Together</h1>
       </b-col>
     </b-row>
-    <b-row>
-      <b-col>
+    <b-row >
+      <b-col >
+        <h1 class="title subtitle">Explore These Recipes</h1>
         <RecipePreviewList
           title="Explore These Recipes"
           class="RandomRecipes center"
           :recipes="random_recipes"
         />
-        <b-button variant="info" @click="updateRandomRecipes">Refresh</b-button>
+        <b-button style="margin: 15px 0px 80px 200px;" variant="info" @click="updateRandomRecipes">Refresh</b-button>
       </b-col>
       <b-col v-if="!$root.store.username">
         <LoginPage></LoginPage>
       </b-col>
       <b-col v-else>
+        <h1 class="title subtitle">Last Watched Recipes</h1>
         <RecipePreviewList
           title="Last Watched Recipes"
           :recipes="last_seen_recipes"
@@ -50,6 +52,7 @@ export default {
   },
   data() {
     return {
+     // logged_in: false,
       random_recipes: this.$store.random_items,
       last_seen_recipes: this.$store.watched_items,
     };
@@ -59,7 +62,7 @@ export default {
       this.updateRandomRecipes();
     }
     if (
-      this.$cookies.get("session") &&
+      this.$root.store.username &&
       this.$store.watched_items.length === 0
     ) {
       this.updateLastSeenRecipes();
@@ -74,7 +77,7 @@ export default {
   },
   updated() {
     console.log("updated");
-    // if(this.$cookies.get("session") && this.$store.watched_items.length === 0){
+    // if(this.$root.store.username && !this.logged_in ){
     //   this.updateLastSeenRecipes();
     // }
   },
@@ -115,5 +118,8 @@ export default {
 <style lang="scss" scoped>
 .RandomRecipes {
   margin: 10px 0 10px;
+}
+#main-title{
+  color: #d54d7b; font-family: "Great Vibes", cursive; font-size: 100px; line-height: 160px; font-weight: bold; margin-bottom: 0px; margin-top: 40px; text-align: center; text-shadow: 0 1px 1px #fff;
 }
 </style>

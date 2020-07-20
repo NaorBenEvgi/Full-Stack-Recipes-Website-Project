@@ -1,12 +1,11 @@
 <template>
   <b-container>
-    <h3>
+    <!-- <h3 class="subtitle">
       {{ title }}:
       <slot></slot>
-    </h3>
-    {{sortBy}}
-    <b-row v-for="r in recipes" :key="r.id">
-      <b-col>
+    </h3> -->
+    <b-row  v-for="r in recipes" :key="r.id">
+      <b-col style="padding-left:98px;">
         <RecipePreview class="recipePreview" :title="title"  :recipe="r" />
       </b-col>
     </b-row>
@@ -34,35 +33,7 @@ export default {
       type: Array,
       required: true
     },
-    sortBy: {
-      type: Array,
-      required: false
-    },
   },
-  methods: {
-    sortByTime(a, b) {
-      const timeA = a.readyInMinutes;
-      const timeB = b.readyInMinutes;
-      let comparison = 0;
-      if (timeA > timeB) {
-        comparison = 1;
-      } else if (timeA < timeB) {
-        comparison = -1;
-      }
-      return comparison;
-    },
-    sortByPopularity(a, b) {
-      const A = a.popularity;
-      const B = b.popularity;
-      let comparison = 0;
-      if (A > B) {
-        comparison = 1;
-      } else if (A < B) {
-        comparison = -1;
-      }
-      return comparison;
-    }
-  }
 };
 </script>
 
