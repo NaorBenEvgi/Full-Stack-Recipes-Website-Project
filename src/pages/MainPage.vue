@@ -52,6 +52,7 @@ export default {
   },
   data() {
     return {
+     // logged_in: false,
       random_recipes: this.$store.random_items,
       last_seen_recipes: this.$store.watched_items,
     };
@@ -61,7 +62,7 @@ export default {
       this.updateRandomRecipes();
     }
     if (
-      this.$cookies.get("session") &&
+      this.$root.store.username &&
       this.$store.watched_items.length === 0
     ) {
       this.updateLastSeenRecipes();
@@ -76,6 +77,9 @@ export default {
   },
   updated() {
     console.log("updated");
+    // if(this.$root.store.username && !this.logged_in ){
+    //   this.updateLastSeenRecipes();
+    // }
     // if(this.$cookies.get("session") && this.$store.watched_items.length === 0){
     //   this.updateLastSeenRecipes();
     // }

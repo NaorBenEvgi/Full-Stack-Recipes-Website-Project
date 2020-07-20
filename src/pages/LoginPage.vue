@@ -146,6 +146,7 @@ export default {
         );
         // console.log(response);
         // this.$root.loggedIn = true;
+        await this.updateLastSeenRecipes();
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
         this.$router.push("/").catch(() => {});
@@ -164,7 +165,7 @@ export default {
       // console.log("login method go");
 
       await this.Login();
-      await this.updateMainPage();
+      // await this.updateMainPage();
       // await this.updateRandomRecipes();
       // await this.updateLastSeenRecipes();
     }

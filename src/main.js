@@ -28,8 +28,14 @@ const shared_data = {
   },
   logout() {
     console.log("logout");
+    console.log(global_data.watched_items);
     global_data.watched_items.length === 0;
-    global_data.search_items.length === 0
+    global_data.search_items.length === 0;
+    global_data.random_items.length === 0;
+    global_data.saved_recipes.length === 0;
+    global_data.my_recipes.length === 0;
+    global_data.family_recipes.length === 0;
+    console.log(global_data.watched_items);
     Vue.$cookies.remove("session");
     localStorage.removeItem("username");
     this.username = undefined;
