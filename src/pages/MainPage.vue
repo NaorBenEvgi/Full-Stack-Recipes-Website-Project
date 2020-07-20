@@ -80,9 +80,6 @@ export default {
     // if(this.$root.store.username && !this.logged_in ){
     //   this.updateLastSeenRecipes();
     // }
-    // if(this.$cookies.get("session") && this.$store.watched_items.length === 0){
-    //   this.updateLastSeenRecipes();
-    // }
   },
   methods: {
     async updateRandomRecipes() {
