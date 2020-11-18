@@ -3,11 +3,11 @@ This Recipes Website was developed by me as a final full-stack project for Web D
 This project is a Single Page Aplication that is written in NodeJS (with ExpressJS and Azure SQL server) for Back-End and VueJS for Frond-End and exposes REST API for external usages enforced by [Swagger API](https://app.swaggerhub.com/apis/naorbe/recipes/1.0.1#/) validation.
 
 ## Backend side
-# Databases
+### Databases
 * External API which includes over 360,000 recipes as well as an open source recipe database (spoonacular API).
 * Secured DB at Azure SQL server that is run by the application to keep the private information of the clients.
 
-# Architecture
+### Architecture
 The server side is based on ExpressJS and divided to 3 routes: 
 * Auth - responsible for the register, login and logout and to set the cookie
 * User - responsible for the user funcionality routers and private activities for each user. This route authenticates all incoming requests by middleware and gets the permission only for the specific user.
@@ -17,7 +17,7 @@ The server side is based on ExpressJS and divided to 3 routes:
 The web application gets all the data from the server side and manages it in the client side or by local storage of the browser. 
 In order of to prevent bothering of the server, the given data that we got will kept in global storage that is volatile.  
 
-# Sign-up and Log-in with session cookies
+### Sign-up and Log-in with session cookies
 This web application works with session cookies:
 1. Once the user signs up, the client posts a HTTP request to the server containing his/her username and password.
 2. The server receives this request and hashes the password before storing the username and password in your database. This way, if someone gains access to your database they won't see your users' actual passwords.
